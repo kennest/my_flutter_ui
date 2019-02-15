@@ -279,18 +279,13 @@ Widget todoItemCard(BuildContext context, String title, int tasks,
         MaterialPageRoute(
             builder: (context) => TodoDetails(
                   tag: tag,
+                  icon: icon,
+                  progress: progress,
+                  title: title,
                 )),
       );
     },
     child: Hero(
-      transitionOnUserGestures: true,
-      flightShuttleBuilder:
-          (flightContext, animation, direction, fromContext, toContext) {
-        return Icon(
-          icon,
-          size: 150.0,
-        );
-      },
       tag: tag,
       child: Container(
           height: 300.0,
@@ -332,12 +327,16 @@ Widget todoItemCard(BuildContext context, String title, int tasks,
                       SizedBox(
                         height: 8.0,
                       ),
-                      LinearProgressIndicator(
-                        backgroundColor: Colors.white,
+                      SizedBox(
+                        height: 2.0,
+                        child:  LinearProgressIndicator(
+                        backgroundColor: Colors.yellow,
                         value: progress,
                         valueColor: new AlwaysStoppedAnimation<Color>(
                             Colors.blueAccent),
+                      ),
                       )
+                     
                     ],
                   )
                 ],

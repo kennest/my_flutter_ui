@@ -21,7 +21,7 @@ class _TodoPageState extends State<TodoPage> {
       width: MediaQuery.of(context).size.width,
       decoration: BoxDecoration(
         gradient: LinearGradient(
-            tileMode: TileMode.clamp,
+            tileMode: TileMode.mirror,
             colors: [Colors.white70, Colors.indigoAccent, Colors.indigo],
             begin: Alignment.topRight,
             end: Alignment.bottomCenter),
@@ -61,13 +61,18 @@ class _TodoPageState extends State<TodoPage> {
               children: <Widget>[
                 Align(
                   alignment: Alignment.topLeft,
-                  child: CircleAvatar(
-                    child: Image.network(
-                      "https://i.pinimg.com/originals/2d/0f/50/2d0f50e8e4f6b233c7cf70b4bd36f89c.png",
-                      height: 80.0,
-                      width: 80.0,
-                      fit: BoxFit.cover,
+                  child: Container(
+                    width: 80.0,
+                    height: 80.0,
+                    decoration: BoxDecoration(
+                      borderRadius: BorderRadius.circular(60.0),
+                      image: DecorationImage(
+                        fit: BoxFit.cover,
+                        image: NetworkImage("https://i.pinimg.com/originals/2d/0f/50/2d0f50e8e4f6b233c7cf70b4bd36f89c.png",
+                  )
+                      )
                     ),
+                  
                   ),
                 ),
                 SizedBox(
@@ -103,9 +108,11 @@ class _TodoPageState extends State<TodoPage> {
             child: ListView(
               scrollDirection: Axis.horizontal,
               children: <Widget>[
-                todoItemCard(context, "Work", 15, 50.0, Icons.work, "work"),
-                todoItemCard(context, "Personal", 5, 90.0, Icons.account_box,
+                todoItemCard(context, "Work", 15, 0.5, Icons.work, "work"),
+                todoItemCard(context, "Personal", 5, 0.9, Icons.account_box,
                     "personal"),
+                     todoItemCard(context, "Home", 10, 0.6, Icons.home,
+                    "home"),
               ],
             ),
           )

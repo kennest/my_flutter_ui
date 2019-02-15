@@ -12,10 +12,13 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
+      color: Colors.indigo,
       title: 'Design UI',
       debugShowCheckedModeBanner: false,
       theme: ThemeData(
-        primarySwatch: Colors.blue,
+        primarySwatch: Colors.indigo,
+        backgroundColor: Colors.indigo,
+        platform: TargetPlatform.fuchsia,
       ),
       home: PageView(
         controller: pageController,
