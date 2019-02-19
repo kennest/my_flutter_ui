@@ -15,6 +15,7 @@ class TensorFlowPage extends StatefulWidget {
 
 class _TensorFlowPageState extends State<TensorFlowPage> {
   CameraController controller;
+  String result = "";
 
   @override
   void initState() {
@@ -46,50 +47,70 @@ class _TensorFlowPageState extends State<TensorFlowPage> {
       print("Initialized Camera!");
       return Container();
     }
-    return Column(
+    return Stack(
       children: <Widget>[
         AspectRatio(
             aspectRatio: controller.value.aspectRatio,
             child: CameraPreview(controller)),
-        RaisedButton(
-          child: Text("Start detection"),
-          onPressed: () async {
-            String res = await Tflite.loadModel(
-                model: "assets/ssd_mobilenet.tflite",
-                labels: "assets/ssd_mobilenet.txt",
-                numThreads: 1 // defaults to 1
-                );
-            print("Model loaded: $res");
+        Positioned(
+          top: 350.0,
+          child: Row(
+            children: <Widget>[
+              result == "" ? 
+               RaisedButton(
+                 color: Colors.blue,
+                 onPressed: (){},
+                child: Text("No result yet",style: TextStyle(color: Colors.white),)) :
+                 RaisedButton(
+                   color: Colors.blueAccent,
+                 onPressed: (){},
+                child: Text("$result",style: TextStyle(color: Colors.white))),
+              RaisedButton(
+                child: Text("Start detection"),
+                onPressed: () async {
+                  String res = await Tflite.loadModel(
+                      model: "assets/ssd_mobilenet.tflite",
+                      labels: "assets/ssd_mobilenet.txt",
+                      numThreads: 1 // defaults to 1
+                      );
+                  print("Model loaded: $res");
 
-            controller.startImageStream((n) async {
-              var recognitions = await Tflite.detectObjectOnFrame(
-                bytesList: n.planes.map((plane) {
-                  return plane.bytes;
-                }).toList(), // required
-                imageHeight: n.height,
-                imageWidth: n.width,
-                imageMean: 127.5, // defaults to 127.5
-                imageStd: 127.5, // defaults to 127.5
-                rotation: 90, // defaults to 90, Android only
-                threshold: 0.1, // defaults to 0.1
-              );
-              print("${recognitions.toString()}");
-            });
-          },
+                  controller.startImageStream((n) async {
+                    var recognitions = await Tflite.detectObjectOnFrame(
+                      bytesList: n.planes.map((plane) {
+                        return plane.bytes;
+                      }).toList(), // required
+                      imageHeight: n.height,
+                      imageWidth: n.width,
+                      imageMean: 127.5, // defaults to 127.5
+                      imageStd: 127.5, // defaults to 127.5
+                      rotation: 90, // defaults to 90, Android only
+                      threshold: 0.1, // defaults to 0.1
+                    );
+                    setState(() {
+                      result = recognitions[0]['detectedClass'];
+                    });
+
+                    print("${recognitions.toString()}");
+                  });
+                },
+              ),
+              RaisedButton(
+                child: Text("Stop Detection"),
+                onPressed: () async {
+                  await controller?.stopImageStream();
+                  await Tflite?.close();
+                },
+              )
+            ],
+          ),
         ),
-        RaisedButton(
-          child: Text("Stop Detection"),
-          onPressed: () async {
-            await Tflite.close();
-            await controller.stopImageStream();
-          },
-        )
       ],
     );
   }
 
   @override
-  void dispose(){
+  void dispose() {
     controller?.dispose();
     super.dispose();
   }

@@ -329,14 +329,13 @@ Widget todoItemCard(BuildContext context, String title, int tasks,
                       ),
                       SizedBox(
                         height: 2.0,
-                        child:  LinearProgressIndicator(
-                        backgroundColor: Colors.yellow,
-                        value: progress,
-                        valueColor: new AlwaysStoppedAnimation<Color>(
-                            Colors.blueAccent),
-                      ),
+                        child: LinearProgressIndicator(
+                          backgroundColor: Colors.yellow,
+                          value: progress,
+                          valueColor: new AlwaysStoppedAnimation<Color>(
+                              Colors.blueAccent),
+                        ),
                       )
-                     
                     ],
                   )
                 ],
