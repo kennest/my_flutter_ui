@@ -89,7 +89,7 @@ class _TensorFlowPageState extends State<TensorFlowPage> {
   }
 
   @override
-  void dispose() async {
+  void dispose(){
     controller?.dispose();
     super.dispose();
   }
