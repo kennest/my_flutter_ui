@@ -65,14 +65,12 @@ class _TodoPageState extends State<TodoPage> {
                     width: 80.0,
                     height: 80.0,
                     decoration: BoxDecoration(
-                      borderRadius: BorderRadius.circular(60.0),
-                      image: DecorationImage(
-                        fit: BoxFit.cover,
-                        image: NetworkImage("https://i.pinimg.com/originals/2d/0f/50/2d0f50e8e4f6b233c7cf70b4bd36f89c.png",
-                  )
-                      )
-                    ),
-                  
+                        borderRadius: BorderRadius.circular(60.0),
+                        image: DecorationImage(
+                            fit: BoxFit.cover,
+                            image: NetworkImage(
+                              "https://i.pinimg.com/originals/2d/0f/50/2d0f50e8e4f6b233c7cf70b4bd36f89c.png",
+                            ))),
                   ),
                 ),
                 SizedBox(
@@ -109,10 +107,9 @@ class _TodoPageState extends State<TodoPage> {
               scrollDirection: Axis.horizontal,
               children: <Widget>[
                 todoItemCard(context, "Work", 15, 0.5, Icons.work, "work"),
-                todoItemCard(context, "Personal", 5, 0.9, Icons.account_box,
-                    "personal"),
-                     todoItemCard(context, "Home", 10, 0.6, Icons.home,
-                    "home"),
+                todoItemCard(
+                    context, "Personal", 5, 0.9, Icons.account_box, "personal"),
+                todoItemCard(context, "Home", 10, 0.6, Icons.home, "home"),
               ],
             ),
           )

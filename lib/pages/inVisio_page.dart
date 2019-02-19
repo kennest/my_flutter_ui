@@ -6,6 +6,12 @@ class InVisioPage extends StatefulWidget {
 
   const InVisioPage({Key key, this.pageController}) : super(key: key);
 
+  factory InVisioPage.forDesignTime() {
+    // TODO: add arguments
+    return new InVisioPage();
+  }
+
+
   @override
   _InVisioPageState createState() => _InVisioPageState();
 }
